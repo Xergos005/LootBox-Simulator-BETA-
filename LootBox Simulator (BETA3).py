@@ -7,9 +7,80 @@ legendary = ["RPG-7 Rocket Launcher", "AWP Sniper Rifle", "Barrett M82 Sniper Ri
 mythic = ["Juggernaut Suit + M61 Minigun" , "EOD Suit + M4A1 Assault Rifle" , "Ghillie Suit +  SILENCED Remington 700 Sniper Rifle"]
 coins = 100
 inventory = []
+chests_opened = 0
+items_collected = 0
+items_sold = 0
+player_level = 1
+player_xp = 0
+xp_to_next_level = 100
+rarest_rarity = "None"
+highest_rarity_value = 0
+lucky_charm = 0
+xp_booster = 0
+coin_multiplier = 0
+chest_discount = 0
 print(f"You start with {coins} coins!")
 while True:
-    answer = input("Press ENTER to open a chest or type EXIT: ")
+    answer = input(
+        "[ENTER] Open Chest | [INVENTORY] View Inventory | [SELL] Sell Items | [STATS] Player Stats | [SHOP] Shop | [EXIT] Quit\n"
+    )
+    if answer.upper() == "SHOP":
+        print("\n========== SHOP ==========")
+        print(f"1. Lucky Charm - Level {lucky_charm}")
+        print(f"2. XP Booster - Level {xp_booster}")
+        print(f"3. Coin Multiplier - Level {coin_multiplier}")
+        print(f"4. Chest Discount - Level {chest_discount}")
+        print("==================================")
+        shop_choice = input("Choose an upgrade (1-4) or EXIT: ")
+        if shop_choice == "1":
+            cost = 100 * (lucky_charm + 1)
+            if coins >= cost:
+                coins -= cost
+                lucky_charm += 1
+                print("\033[92mLucky Charm upgraded!\033[0m")
+            else:
+                print("\033[91mNot enough coins!\033[0m")
+        elif shop_choice == "2":
+            cost = 150 * (xp_booster + 1)
+
+            if coins >= cost:
+                coins -= cost
+                xp_booster += 1
+                print("\033[92mXP Booster upgraded!\033[0m")
+            else:
+                print("\033[91mNot enough coins!\033[0m")
+        elif shop_choice == "3":
+            cost = 200 * (coin_multiplier + 1)
+
+            if coins >= cost:
+                coins -= cost
+                coin_multiplier += 1
+                print("\033[92mCoin Multiplier upgraded!\033[0m")
+            else:
+                print("\033[91mNot enough coins!\033[0m")
+        elif shop_choice == "4":
+            cost = 250 * (chest_discount + 1)
+
+            if coins >= cost:
+                coins -= cost
+                chest_discount += 1
+                print("\033[92mChest Discount upgraded!\033[0m")
+            else:
+                print("\033[91mNot enough coins!\033[0m")
+        continue
+    if answer.upper() == "STATS":
+        print("\n========== PLAYER STATS ==========")
+
+        print(f"\033[93m Current Balance: {coins} coins\033[0m")
+        print(f"\033[34m Chests Opened: {chests_opened}\033[0m")
+        print(f"\033[92m Items Collected: {items_collected}\033[0m")
+        print(f"\033[91m Items Sold: {items_sold}\033[0m")
+        print(f"\033[95m Rarest Item Rarity: {rarest_rarity.upper()}\033[0m")
+        print(f"\033[93m Player Level: {player_level}\033[0m")
+        print(f"\033[96m Player XP: {player_xp}/{xp_to_next_level}\033[0m")
+
+        print("==================================")
+        continue
     if answer.upper() == "INVENTORY":
         print("\n========== YOUR INVENTORY ==========")
         if len(inventory) == 0:
@@ -33,7 +104,8 @@ while True:
                     index = int(number) - 1
                     if 0 <= index < len(inventory):
                         weapon, value = inventory.pop(index)
-                        coins += value
+                        bonus_value = int(value * (1 + coin_multiplier * 0.10))
+                        coins += bonus_value
                         print(f"You sold {weapon} for {value} coins!")
                     else:
                         print("Invalid weapon number!")
@@ -42,28 +114,66 @@ while True:
             print(f"Your balance: {coins} coins")
             continue
     if answer.upper() == "EXIT":
-        break
+        confirm = input("Are you sure you want to quit? (YES/NO): ")
+        if confirm.upper() == "YES":
+            print("Thanks for playing LootBox Simulator!")
+            break
+        else:
+            print("Returning to the game...")
+            continue
     if coins < 20:
         print("Not enough coins! You can still manage your inventory.")
         continue
-    coins -= 20
+    chest_cost = max(5, 20 - (chest_discount * 2))
+    coins -= chest_cost
     print(f"You spent 20 coins! You now have {coins} coins.")
-
     print("You opened a chest!")
-    chosen_rarity = random.choices(
-        rarity,
-        weights=[60, 25, 12, 3],
-        k=1
+    chests_opened += 1
+    xp_gain = 25 + (xp_booster * 10)
+    player_xp += xp_gain
+    print(f"\033[96mYou earned {xp_gain} XP!\033[0m")
+    print(f"You earned 25 XP! ({player_xp}/{xp_to_next_level})")
+    if player_xp >= xp_to_next_level:
+        player_xp -= xp_to_next_level
+        player_level += 1
+        xp_to_next_level = int(xp_to_next_level * 1.15)
+        print("\033[93m")
+        print("██╗     ███████╗██╗   ██╗███████╗██╗         ██╗   ██╗██████╗")
+        print("██║     ██╔════╝██║   ██║██╔════╝██║         ██║   ██║██╔══██╗")
+        print("██║     █████╗  ██║   ██║█████╗  ██║         ██║   ██║██████╔╝")
+        print("██║     ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║         ██║   ██║██╔═══╝")
+        print("███████╗███████╗ ╚████╔╝ ███████╗███████╗    ╚██████╔╝██║")
+        print("╚══════╝╚══════╝  ╚═══╝  ╚══════╝╚══════╝     ╚═════╝ ╚═╝")
+        print(f"\n              PLAYER LEVEL: {player_level}")
+        print("\033[0m")
+    rarity = random.choices(
+        ["common", "rare", "legendary", "mythic"],
+        weights=[
+            max(10, 60 - lucky_charm * 7),
+            25 + lucky_charm * 2,
+            12 + lucky_charm * 3,
+            3 + lucky_charm * 2
+        ],
     )[0]
-    if chosen_rarity == "common":
+    rarity_values = {
+        "common": 1,
+        "rare": 2,
+        "legendary": 3,
+        "mythic": 4
+    }
+
+    if rarity_values[rarity] > highest_rarity_value:
+        highest_rarity_value = rarity_values[rarity]
+        rarest_rarity = rarity
+    if rarity == "common":
         weapon = random.choice(common)
         color = "\033[37m"
         value = 10
-    elif chosen_rarity == "rare":
+    elif rarity == "rare":
         weapon = random.choice(rare)
         color = "\033[34m"
         value = 25
-    elif chosen_rarity == "legendary":
+    elif rarity == "legendary":
         weapon = random.choice(legendary)
         color = "\033[33m"
         value = 75
@@ -71,14 +181,17 @@ while True:
         weapon = random.choice(mythic)
         color = "\033[31m"
         value = 250
-    print(f"{color}You got a {chosen_rarity.upper()} weapon: {weapon}!\033[0m")
+    print(f"{color}You got a {rarity.upper()} weapon: {weapon}!\033[0m")
     print(f"{weapon} is now in your inventory!")
     choice = input("Do you want to SELL or KEEP this weapon? ").lower()
     if choice == "keep":
         inventory.append((weapon, value))
+        items_collected += 1
         print(f"{weapon} added to your inventory!")
     elif choice == "sell":
-        coins += value
+        bonus_value = int(value * (1 + coin_multiplier * 0.10))
+        coins += bonus_value
+        items_sold += 1
         print(f"You sold {weapon} for {value} coins!")
     else:
         print("Invalid choice!")
