@@ -18,6 +18,7 @@ LootBox Simulator is a terminal-based loot game built with Python. Open chests, 
 - ⭐ XP Booster — increases XP earned per chest
 - 💰 Coin Multiplier — increases selling profits
 - 🎟️ Chest Discount — reduces chest opening costs
+- 🏆 Achievement system
 - ☠️ Game Over screen
 - 🎨 Colored terminal interface
 
@@ -28,7 +29,6 @@ LootBox Simulator is a terminal-based loot game built with Python. Open chests, 
 
 ## 🚀 Future Plans
 
-- 🏆 Achievement system
 - 🎁 Multiple crate types
 - 💾 Save and load progress
 - 🎨 Graphical user interface
@@ -39,12 +39,40 @@ LootBox Simulator is a terminal-based loot game built with Python. Open chests, 
 
 # 📜 DEVELOPMENT HISTORY
 
+## 🟡 VERSION 1.4 — ACHIEVEMENT SYSTEM
+
+**CURRENT VERSION — BETA V1.4**
+
+LootBox Simulator introduces its first achievement system!
+
+### Added
+
+- 🏆 Achievement unlocking system
+- 🎉 Custom ACHIEVEMENT UNLOCKED ASCII banner
+- 🥇 First Steps — Open your first chest
+- 🎒 Collector — Keep 10 weapons
+- 💰 Getting Rich — Reach 500 coins
+- 🍀 Luck of the Draw — Obtain a Legendary weapon
+- 💎 Beyond the Odds — Obtain a Mythic weapon
+- 🛒 Reseller — Sell 10 weapons
+- 💵 Arms Dealer — Sell 50 weapons
+- 🏪 Upping the Game — Purchase an upgrade
+- 🔥 Luckiest Guy in Town — Own 20 Legendary weapons
+- 💜 A Myth Made Real — Own 20 Mythic weapons
+
+### Planned Achievements
+
+- 🏆 Master of All Trades — Own a weapon of every rarity
+- 👑 The Ultimate Collection — Collect every weapon in the game
+
+---
+
 ## 🟡 VERSION 1.3 — SHOP & UPGRADE SYSTEM
-**CURRENT VERSION — BETA V1.3**
 
 LootBox Simulator introduces its first upgrade system!
 
 ### Added
+
 - 🏪 Interactive Shop menu
 - 🍀 Lucky Charm — improves the chances of finding higher-rarity items
 - ⭐ XP Booster — increases XP earned per chest
@@ -55,6 +83,7 @@ LootBox Simulator introduces its first upgrade system!
 - 🔒 Minimum chest price protection
 
 ### Changed
+
 - Improved loot probability calculations
 - Improved XP reward calculations
 - Updated item selling rewards
@@ -68,6 +97,7 @@ LootBox Simulator introduces its first upgrade system!
 A major step towards making LootBox Simulator feel like a complete game.
 
 ### Added
+
 - 📊 Player statistics dashboard
 - 📈 Chests opened counter
 - 🎒 Items collected counter
@@ -80,6 +110,7 @@ A major step towards making LootBox Simulator feel like a complete game.
 - 🎨 Improved terminal colors
 
 ### Changed
+
 - Improved command handling
 - Added exit confirmation
 - Improved player information display
@@ -91,6 +122,7 @@ A major step towards making LootBox Simulator feel like a complete game.
 LootBox Simulator gets its first major gameplay improvements.
 
 ### Added
+
 - 🎒 Inventory management system
 - 💰 Starting balance of 100 coins
 - 🛒 Item selling system
@@ -106,6 +138,7 @@ LootBox Simulator gets its first major gameplay improvements.
 The beginning of LootBox Simulator!
 
 ### Added
+
 - 🎲 Random loot generation
 - 💎 Four rarity levels: Common, Rare, Legendary and Mythic
 - 🎁 Basic chest-opening system
@@ -119,7 +152,6 @@ The beginning of LootBox Simulator!
 Planned features for upcoming versions:
 
 - 🎁 Multiple crate types
-- 🏆 Achievement system
 - 💾 Save and load progress
 - 📚 Item collection database
 - 🎨 Graphical user interface
@@ -131,7 +163,7 @@ Planned features for upcoming versions:
 
 ## 📌 PROJECT INFORMATION
 
-- **Current Version:** 1.3
+- **Current Version:** 1.4
 - **Development Status:** BETA
 - **Project:** LootBox Simulator
 - **Programming Language:** Python
