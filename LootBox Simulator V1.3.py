@@ -19,7 +19,27 @@ lucky_charm = 0
 xp_booster = 0
 coin_multiplier = 0
 chest_discount = 0
+achievements = []
 print(f"You start with {coins} coins!")
+def unlock_achievement(name):
+    achievements.append(name)
+    print("\033[95m" + fr"""
+             █████╗  ██████╗██╗  ██╗██╗███████╗██╗   ██╗███████╗███╗   ███╗███████╗███╗   ██╗████████╗
+            ██╔══██╗██╔════╝██║  ██║██║██╔════╝██║   ██║██╔════╝████╗ ████║██╔════╝████╗  ██║╚══██╔══╝
+            ███████║██║     ███████║██║█████╗  ██║   ██║█████╗  ██╔████╔██║█████╗  ██╔██╗ ██║   ██║
+            ██╔══██║██║     ██╔══██║██║██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║
+            ██║  ██║╚██████╗██║  ██║██║███████╗ ╚████╔╝ ███████╗██║ ╚═╝ ██║███████╗██║ ╚████║   ██║
+            ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝  ╚═══╝  ╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝
+
+                      ██╗   ██╗███╗   ██╗██╗      ██████╗  ██████╗██╗  ██╗███████╗██████╗
+                      ██║   ██║████╗  ██║██║     ██╔═══██╗██╔════╝██║ ██╔╝██╔════╝██╔══██╗
+                      ██║   ██║██╔██╗ ██║██║     ██║   ██║██║     █████╔╝ █████╗  ██║  ██║
+                      ██║   ██║██║╚██╗██║██║     ██║   ██║██║     ██╔═██╗ ██╔══╝  ██║  ██║
+                      ╚██████╔╝██║ ╚████║███████╗╚██████╔╝╚██████╗██║  ██╗███████╗███████║
+                       ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝
+
+                                              {name.upper()}
+    """)
 while True:
     answer = input(
         "[ENTER] Open Chest | [INVENTORY] View Inventory | [SELL] Sell Items | [STATS] Player Stats | [SHOP] Shop | [EXIT] Quit\n"
@@ -37,6 +57,8 @@ while True:
             if coins >= cost:
                 coins -= cost
                 lucky_charm += 1
+                if "Upping the Game" not in achievements:
+                    unlock_achievement("Upping the Game")
                 print("\033[92mLucky Charm upgraded!\033[0m")
             else:
                 print("\033[91mNot enough coins!\033[0m")
@@ -129,6 +151,8 @@ while True:
     print(f"You spent 20 coins! You now have {coins} coins.")
     print("You opened a chest!")
     chests_opened += 1
+    if chests_opened == 1:
+        unlock_achievement("First Steps")
     xp_gain = 25 + (xp_booster * 10)
     player_xp += xp_gain
     print(f"\033[96mYou earned {xp_gain} XP!\033[0m")
@@ -144,7 +168,7 @@ while True:
         print("██║     ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║         ██║   ██║██╔═══╝")
         print("███████╗███████╗ ╚████╔╝ ███████╗███████╗    ╚██████╔╝██║")
         print("╚══════╝╚══════╝  ╚═══╝  ╚══════╝╚══════╝     ╚═════╝ ╚═╝")
-        print(f"\n              PLAYER LEVEL: {player_level}")
+        print(f"\n           PLAYER LEVEL: {player_level}")
         print("\033[0m")
     rarity = random.choices(
         ["common", "rare", "legendary", "mythic"],
@@ -153,7 +177,7 @@ while True:
             25 + lucky_charm * 2,
             12 + lucky_charm * 3,
             3 + lucky_charm * 2
-        ],
+        ]
     )[0]
     rarity_values = {
         "common": 1,
@@ -175,10 +199,14 @@ while True:
         value = 25
     elif rarity == "legendary":
         weapon = random.choice(legendary)
+        if rarity == "legendary" and "Luck of the Draw" not in achievements:
+            unlock_achievement("Luck of the Draw")
         color = "\033[33m"
         value = 75
     else:
         weapon = random.choice(mythic)
+        if rarity == "mythic" and "Beyond the Odds" not in achievements:
+            unlock_achievement("Beyond the Odds")
         color = "\033[31m"
         value = 250
     print(f"{color}You got a {rarity.upper()} weapon: {weapon}!\033[0m")
@@ -187,11 +215,31 @@ while True:
     if choice == "keep":
         inventory.append((weapon, value))
         items_collected += 1
+        mythic_count = 0
+        for item_weapon, item_value in inventory:
+            if item_weapon in mythic:
+                mythic_count += 1
+        if mythic_count >= 20 and "A Myth Made Real" not in achievements:
+            unlock_achievement("A Myth Made Real")
+        legendary_count = 0
+        for item_weapon, item_value in inventory:
+            if item_weapon in legendary:
+                legendary_count += 1
+        if legendary_count >= 20 and "Luckiest Guy in Town" not in achievements:
+            unlock_achievement("Luckiest Guy in Town")
+        if items_collected == 10 and "Collector" not in achievements:
+            unlock_achievement("Collector")
         print(f"{weapon} added to your inventory!")
     elif choice == "sell":
         bonus_value = int(value * (1 + coin_multiplier * 0.10))
         coins += bonus_value
+        if coins >= 500 and "Getting Rich" not in achievements:
+            unlock_achievement("Getting Rich")
         items_sold += 1
+        if items_sold == 10 and "Reseller" not in achievements:
+            unlock_achievement("Reseller")
+        if items_sold == 50 and "Arms Dealer" not in achievements:
+            unlock_achievement("Arms Dealer")
         print(f"You sold {weapon} for {value} coins!")
     else:
         print("Invalid choice!")
