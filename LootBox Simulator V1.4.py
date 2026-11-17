@@ -1,4 +1,5 @@
 import random
+import os
 input("Welcome to LootBox Simulator! Press ENTER to continue...")
 rarity = ["common", "rare", "legendary", "mythic"]
 common = ["Scrapped Assault Rifle", "Makeshift Shotgun", "Rusted Revolver" , "Vintage Pistol" , "Homemade Crossbow" , "Broken Hunting Rifle" , "Old Double Barrel Shotgun"]
@@ -40,7 +41,11 @@ def unlock_achievement(name):
 
                                               {name.upper()}
     """)
+
+def pause():
+    input("\nPress ENTER to continue...")
 while True:
+    os.system("cls")
     answer = input(
         "[ENTER] Open Chest | [INVENTORY] View Inventory | [SELL] Sell Items | [STATS] Player Stats | [SHOP] Shop | [EXIT] Quit\n"
     )
@@ -89,6 +94,8 @@ while True:
                 print("\033[92mChest Discount upgraded!\033[0m")
             else:
                 print("\033[91mNot enough coins!\033[0m")
+        print("pause function reached")
+        pause()
         continue
     if answer.upper() == "STATS":
         print("\n========== PLAYER STATS ==========")
@@ -102,6 +109,7 @@ while True:
         print(f"\033[96m Player XP: {player_xp}/{xp_to_next_level}\033[0m")
 
         print("==================================")
+        pause()
         continue
     if answer.upper() == "INVENTORY":
         print("\n========== YOUR INVENTORY ==========")
@@ -113,6 +121,7 @@ while True:
             total_value = sum(item[1] for item in inventory)
             print(f"\nTotal Inventory Value: {total_value} coins")
         print("====================================")
+        pause()
         continue
     if answer.upper() == "SELL":
             if len(inventory) == 0:
@@ -134,6 +143,7 @@ while True:
                 else:
                     print("Please enter a number!")
             print(f"Your balance: {coins} coins")
+            pause()
             continue
     if answer.upper() == "EXIT":
         confirm = input("Are you sure you want to quit? (YES/NO): ")
